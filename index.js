@@ -1,10 +1,19 @@
-const express = require("express")
-var cors = require('cors')
+import express from 'express'
+import cors from "cors"
 const app = express()
 app.use(cors())
-const serviceDb = require("./firebase/firebase")
+app.use(express.json())
+import serviceDb from './firebase/firebase.js'
 app.get("/", async(req, res)=>{
     const data = await serviceDb.getAllData()
+    res.send(data)
+})
+app.get("/blog", async(req, res)=>{
+    const data = await serviceDb.getAllDataBlog()
+    res.send(data)
+})
+app.get("/autor/:id", async(req, res)=>{
+    const data = await serviceDb.getAllDataByAutor(req.params.id)
     res.send(data)
 })
 app.get("/categorie/:categorie", async(req, res)=>{
@@ -15,5 +24,16 @@ app.get("/details/:id", async(req, res)=>{
     const data = await serviceDb.getDataForId(req.params.id)
     res.send(data)
 })
-
-app.listen(5000, ()=> console.log("Server is RUNNING in port 5000"))
+app.get("/blog/:id", async(req, res)=>{
+    const data = await serviceDb.getBlogForId(req.params.id)
+    res.send(data)
+})
+app.post("/createpost", async(req, res)=>{
+    const data = await serviceDb.savePost(req.body)
+    res.send("listo")
+})
+app.post("/createblogpost", async(req, res)=>{
+    const data = await serviceDb.saveBlogPost(req.body)
+    res.send("listo")
+})
+app.listen(4000, ()=> console.log("Server is RUNNING in port 4000"))
