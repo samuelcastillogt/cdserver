@@ -35,10 +35,15 @@ class FirebaseService{
       const data = []
       const snapshot = await db.collection('blog').limit(10).get();
       snapshot.forEach((doc) => {
-              const {titulo, imagen} = doc.data()
+              const {titulo, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
               const info = {
                 titulo,
-                imagen
+                imagen,
+                descripcion, 
+                categoria, 
+                direccion, 
+                lat, 
+                lng
               }
               data.push({id:doc.id, data: info})
        })
