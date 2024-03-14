@@ -22,11 +22,16 @@ class FirebaseService{
         const data = []
         const snapshot = await db.collection('bisiness').limit(10).get();
         snapshot.forEach((doc) => {
-                const {nombre, imagen} = doc.data()
-                const info = {
-                  nombre,
-                  imagen
-                }
+          const {titulo, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
+          const info = {
+            titulo,
+            imagen,
+            descripcion, 
+            categoria, 
+            direccion, 
+            lat, 
+            lng
+          }
                 data.push({id:doc.id, data: info})
          })
         return data
@@ -35,15 +40,10 @@ class FirebaseService{
       const data = []
       const snapshot = await db.collection('blog').limit(10).get();
       snapshot.forEach((doc) => {
-              const {titulo, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
+              const {titulo, imagen} = doc.data()
               const info = {
                 titulo,
-                imagen,
-                descripcion, 
-                categoria, 
-                direccion, 
-                lat, 
-                lng
+                imagen
               }
               data.push({id:doc.id, data: info})
        })
