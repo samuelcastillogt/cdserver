@@ -16,6 +16,10 @@ app.get("/autor/:id", async(req, res)=>{
     const data = await serviceDb.getAllDataByAutor(req.params.id)
     res.send(data)
 })
+app.post("/edit/:id", async(req, res)=>{
+    const data = await serviceDb.editBusiness(req.body)
+    res.send(data)
+})
 app.get("/categorie/:categorie", async(req, res)=>{
     const data = await serviceDb.getDataForCategorie(req.params.categorie)
     res.send(data)

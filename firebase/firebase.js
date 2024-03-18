@@ -20,7 +20,7 @@ const db = getFirestore();
 class FirebaseService{
     async getAllData(){
         const data = []
-        const snapshot = await db.collection('bisiness').limit(10).get();
+        const snapshot = await db.collection('bisiness').get();
         snapshot.forEach((doc) => {
           const {titulo, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
           const info = {
@@ -77,6 +77,9 @@ class FirebaseService{
   }
     async savePost(data){
       await db.collection("test").add(data)
+    }
+    async editBusiness(data){
+      db.collection("bisiness").doc(data.id).set(data).then(()=> {return true}).catch((erro)=> erro)
     }
     async saveBlogPost(data){
       await db.collection("blog").add(data)
