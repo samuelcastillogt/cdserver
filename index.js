@@ -17,7 +17,12 @@ app.get("/autor/:id", async(req, res)=>{
     res.send(data)
 })
 app.post("/edit/:id", async(req, res)=>{
-    const data = await serviceDb.editBusiness(req.body)
+    const data = await serviceDb.editBusiness(req.body.data)
+    console.log(data)
+    res.send(data)
+})
+app.get("/delete/:id", async(req, res)=>{
+    const data = await serviceDb.deleteBusiness(req.params.id)
     res.send(data)
 })
 app.get("/categorie/:categorie", async(req, res)=>{

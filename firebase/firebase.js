@@ -22,9 +22,9 @@ class FirebaseService{
         const data = []
         const snapshot = await db.collection('bisiness').get();
         snapshot.forEach((doc) => {
-          const {titulo, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
+          const {nombre, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
           const info = {
-            titulo,
+            nombre,
             imagen,
             descripcion, 
             categoria, 
@@ -79,7 +79,20 @@ class FirebaseService{
       await db.collection("test").add(data)
     }
     async editBusiness(data){
-      db.collection("bisiness").doc(data.id).set(data).then(()=> {return true}).catch((erro)=> erro)
+      try{
+          await db.collection("bisiness").doc(data.id).set(data.data)
+          return true
+      }catch(err){
+        return false
+      }
+    }
+    async deleteBusiness(id){
+      try{
+          await db.collection("bisiness").doc(id).delete()
+          return true
+      }catch(err){
+        return false
+      }
     }
     async saveBlogPost(data){
       await db.collection("blog").add(data)
