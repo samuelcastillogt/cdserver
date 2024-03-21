@@ -1,9 +1,11 @@
+
 import express from 'express'
 import cors from "cors"
 const app = express()
 app.use(cors())
 app.use(express.json())
 import serviceDb from './firebase/firebase.js'
+import {login} from "./auth/index.js"
 app.get("/", async(req, res)=>{
     const data = await serviceDb.getAllData()
     res.send(data)
@@ -52,5 +54,10 @@ app.post("/createpost", async(req, res)=>{
 app.post("/createblogpost", async(req, res)=>{
     const data = await serviceDb.saveBlogPost(req.body)
     res.send("listo")
+})
+app.post("/login", async(req, res)=>{
+    const {user} = req.body
+    const token = await login(user)
+    res.send(token)
 })
 app.listen(4000, ()=> console.log("Server is RUNNING in port 4000"))
