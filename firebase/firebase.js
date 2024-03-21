@@ -78,6 +78,17 @@ class FirebaseService{
     async savePost(data){
       await db.collection("test").add(data)
     }
+    async saveBusiness(data){
+      console.log(data)
+      try{
+      await db.collection("bisiness").add(data)
+      return true        
+      }catch(err){
+        console.log(err)
+        return false
+      }
+
+    }
     async editBusiness(data){
       try{
           await db.collection("bisiness").doc(data.id).set(data.data)
@@ -97,6 +108,11 @@ class FirebaseService{
     async saveBlogPost(data){
       await db.collection("blog").add(data)
     }
+    async getCategories(){
+      const doc = await db.collection('categorias').doc("zXttFmbYWdQ1qHkAXrbT").get();
+      const data = {id:doc.id, data: doc.data()}
+      return data
+  }
 }
 const serviceDb = new FirebaseService()
 export default serviceDb

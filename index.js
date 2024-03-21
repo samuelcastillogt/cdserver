@@ -21,6 +21,10 @@ app.post("/edit/:id", async(req, res)=>{
     console.log(data)
     res.send(data)
 })
+app.post("/add", async(req, res)=>{
+    const data = await serviceDb.saveBusiness(req.body.data)
+    res.send(data)
+})
 app.get("/delete/:id", async(req, res)=>{
     const data = await serviceDb.deleteBusiness(req.params.id)
     res.send(data)
@@ -35,6 +39,10 @@ app.get("/details/:id", async(req, res)=>{
 })
 app.get("/blog/:id", async(req, res)=>{
     const data = await serviceDb.getBlogForId(req.params.id)
+    res.send(data)
+})
+app.get("/categories", async(req, res)=>{
+    const data = await serviceDb.getCategories()
     res.send(data)
 })
 app.post("/createpost", async(req, res)=>{
