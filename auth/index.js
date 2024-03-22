@@ -3,21 +3,31 @@ import  bcrypt from "bcrypt"
 import {users} from "../firebase/user.js"
 const myPlaintextPassword = "not_bacon";
 export const login = async(user)=>{
-    var valor = null
+
     const userData = users.filter(item => user.name == item.name)
-    // const response = await bcrypt.compare(user.pass, userData[0].pass    , function(err, result) {
-    //     return result
-    //     console.log(valor)
-    // });
-    const data = await bcrypt.compare(user.pass, userData[0].pass).then(function(result) {
-        if(result == true){
-            return Jwt.sign(userData[0].name, "chuvacachuvaca")
-        }else{
-            return "error"
-        }
-    });
-    return data
+    if(userData.length == 0 ) return "Error"
+    const data = await bcrypt.compare(user.pass, userData[0].pass)
+    if(data){
+        /// corregir por permisos
+        const token = Jwt.sign(userData[0].name, "chuvacacacaca")
+        return token
+    }else{
+        return "Error"
+    }
 } 
+export const verify = async(req, res, next)=>{
+    if(req.headers.token == null) return res.sendStatus(401)
+    Jwt.verify(req.headers.token, "chuvacacacaca", (err, user)=>{
+        if(err) return res.sendStatus(401)
+        req.user = user
+        next()
+    })   
+}
+export const checkToken = async(req, res, next)=>{
+    console.log(req.headers.token)
+    req.token = true
+    next()
+}
 
 
 // bcrypt.genSalt(saltRounds, function(err, salt) {
