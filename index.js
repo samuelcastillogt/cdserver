@@ -7,12 +7,13 @@ app.use(cors())
 app.use(express.json())
 import serviceDb from './firebase/firebase.js'
 import {login} from "./auth/index.js"
+import { getAllData } from './blog/index.js'
 app.get("/",  async(req, res)=>{
     const data = await serviceDb.getAllData()
     res.send(data)
 })
 app.get("/blog", async(req, res)=>{
-    const data = await serviceDb.getAllDataBlog()
+    const data = await getAllData()
     res.send(data)
 })
 app.get("/autor/:id", async(req, res)=>{
