@@ -10,7 +10,6 @@ import SwaggerDocsV1 from './v1/swagger.js'
 const app = express()
 app.use(cors())
 app.use(express.json())
-console.log(process.env)
 //// news routers
 import v1 from "./v1/index.js"
 /// to delete 
