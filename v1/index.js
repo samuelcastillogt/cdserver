@@ -6,7 +6,7 @@ import SwaggerDocs from "./swagger.js"
 const router = Router()
 
 router.get("/", (req, res) => {
-    res.send("AHaHAHA")
+    res.send("<h1>Welcome to frist version API</h1>")
 })
 router.use("/user", user)
 router.use("/business", busines)
