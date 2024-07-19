@@ -3,13 +3,12 @@ import  bcrypt from "bcrypt"
 import {users} from "../firebase/user.js"
 const myPlaintextPassword = "not_bacon";
 export const login = async(user)=>{
-
     const userData = users.filter(item => user.name == item.name)
     if(userData.length == 0 ) return "Error"
     const data = await bcrypt.compare(user.pass, userData[0].pass)
     if(data){
         /// corregir por permisos
-        const token = Jwt.sign(userData[0].name, "chuvacacacaca")
+        const token = Jwt.sign({name: userData[0].name}, "chuvacacacaca", { expiresIn : "120m"})
         return token
     }else{
         return "Error"
@@ -24,9 +23,11 @@ export const verify = async(req, res, next)=>{
     })   
 }
 export const checkToken = async(req, res, next)=>{
-    console.log(req.headers.token)
-    req.token = true
-    next()
+    Jwt.verify(req.headers.token, "chuvacacacaca", (err, user)=>{
+        if(err) return res.sendStatus(401)
+        req.token = user
+        next()
+    })
 }
 
 

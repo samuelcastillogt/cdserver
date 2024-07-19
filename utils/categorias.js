@@ -1,4 +1,4 @@
-export const categoria= [
+export const categorias= [
     "Transporte",
    "Musicos",
    "Restaurante",
