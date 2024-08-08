@@ -105,6 +105,15 @@ class FirebaseService{
       const data = {id:doc.id, data: doc.data()}
       return data.data.categorias
   }
+  async saveDataLead(data){
+    try {
+      await db.collection("lead").add(data)
+      return true
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  }
 }
 const serviceDb = new FirebaseService()
 export default serviceDb

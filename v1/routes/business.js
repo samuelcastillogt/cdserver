@@ -22,4 +22,8 @@ router.get("/categories", async(req, res)=>{
     const data = await serviceDb.getCategories()
     res.send(data)
 })
+router.post("/dataToInfo", async(req, res)=>{
+    const result = await serviceDb.saveDataLead(req.body.data)
+    res.send(result)
+})
 export default router
