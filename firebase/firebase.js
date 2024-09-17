@@ -32,7 +32,7 @@ class FirebaseService{
            cacheService.setCache(data)
           return data
         }else{
-          return dataCache
+          return dataCache.data
         }
 
     }
