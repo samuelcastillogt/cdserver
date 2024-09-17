@@ -12,8 +12,9 @@ app.use(cors())
 app.use(express.json())
 //// news routers
 import v1 from "./v1/index.js"
+import { cacheService } from './cache/index.js'
 /// to delete 
-
+cacheService.calculateExpiration()
 app.get("/",  async(req, res)=>{
     const data = await serviceDb.getAllData()
     res.send(data)

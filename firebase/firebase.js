@@ -1,6 +1,7 @@
 import { initializeApp, applicationDefault, cert } from 'firebase-admin/app'
 import  { getFirestore, Timestamp} from "firebase-admin/firestore"
 import {setDoc, addDoc,  collection, doc } from "firebase/firestore"
+import { cacheService } from '../cache/index.js';
 initializeApp({
   credential: cert({
     "type": "service_account",
@@ -19,14 +20,21 @@ initializeApp({
 const db = getFirestore();
 class FirebaseService{
     async getAllData(){
-        const data = []
-        const snapshot = await db.collection('bisiness').get();
-        snapshot.forEach((doc) => {
-          const {nombre, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
-          const info = {nombre, imagen, descripcion, categoria, direccion, lat, lng}
-          data.push({id:doc.id, data: info})
-         })
-        return data
+        const dataCache = await cacheService.getCache()
+        if(dataCache == null){
+          const data = []
+          const snapshot = await db.collection('bisiness').get();
+          snapshot.forEach((doc) => {
+            const {nombre, imagen, descripcion, categoria, direccion, lat, lng} = doc.data()
+            const info = {nombre, imagen, descripcion, categoria, direccion, lat, lng}
+            data.push({id:doc.id, data: info})
+           })
+           cacheService.setCache(data)
+          return data
+        }else{
+          return dataCache
+        }
+
     }
     async getAllDataBlog(){
       const data = []
