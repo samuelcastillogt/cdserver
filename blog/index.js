@@ -6,3 +6,9 @@ export const getAllData = async()=>{
     response.data.items.forEach((i)=> urls.push({url: i.url, title: i.title}))
     return urls
 }
+export const getAllData2 = async()=>{
+    const urls = []
+    const response = await axios.get("https://www.googleapis.com/blogger/v3/blogs/7446224671990318703/posts?key=AIzaSyCUbCHfwnO1P8oRvK1iHASDBaByyvPuEmE")  
+    response.data.items.forEach((i)=> urls.push(i))
+    return urls
+}

@@ -5,7 +5,7 @@ import 'dotenv/config'
 import { checkToken, verify } from './auth/index.js'
 import serviceDb from './firebase/firebase.js'
 import {login} from "./auth/index.js"
-import { getAllData } from './blog/index.js'
+import { getAllData, getAllData2 } from './blog/index.js'
 import SwaggerDocsV1 from './v1/swagger.js'
 const app = express()
 app.use(cors())
@@ -33,6 +33,10 @@ app.get("/delete/:id", verify,async(req, res)=>{
 })
 app.get("/blog", async(req, res)=>{
     const data = await getAllData()
+    res.send(data)
+})
+app.get("/blog2", async(req, res)=>{
+    const data = await getAllData2()
     res.send(data)
 })
 app.post("/login", async(req, res)=>{

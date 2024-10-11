@@ -21,6 +21,7 @@ const db = getFirestore();
 class FirebaseService{
     async getAllData(){
         const dataCache = await cacheService.getCache()
+        console.log(cacheService.getCache())
         if(dataCache == null){
           const data = []
           const snapshot = await db.collection('bisiness').get();
